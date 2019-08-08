@@ -29,6 +29,12 @@ class _RandomWordsState extends State<RandomWords> {
     return new Scaffold(
       appBar: AppBar(
         title: Text('Startup Name Generator'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: _pushSaved,
+          )
+        ],
       ),
       body: _buildSuggestions(),
     );
@@ -69,6 +75,38 @@ class _RandomWordsState extends State<RandomWords> {
           }
         });
       },
+    );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = _savedWordPair.map(
+            (WordPair pair) {
+              return ListTile(
+                title: Text(
+                  pair.asPascalCase,
+                  style: _biggerFont
+                ),
+              );
+            }
+          );
+
+          final List<Widget> divided = ListTile.divideTiles(
+            context: context,
+            tiles: tiles,
+          )
+          .toList();
+
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Saved suggestions'),
+            ),
+            body: ListView(children: divided),
+          );
+        }
+      )
     );
   }
 }
