@@ -1,114 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
+import './pages/getting_start.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Startup Name Generator',
-      theme: ThemeData(
-        primaryColor: Colors.orangeAccent
-      ),
-      home: RandomWords()
-    );
-  }
+void main() {
+  runApp(
+    MaterialApp(
+      initialRoute: HomePage.route,
+      routes: {
+        HomePage.route: (context) => HomePage(),
+        SuggestWordListPage.route: (context) => SuggestWordListPage()
+      }
+    )
+  );
 }
 
-class RandomWords extends StatefulWidget {
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _savedWordPair = Set<WordPair>();
-  final _biggerFont = const TextStyle(fontSize: 18.0);
+class HomePage extends StatelessWidget {
+  static const route = '/';
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    const pages = <PageInfomation>[
+      PageInfomation(SuggestWordListPage.route, 'Getting Start')
+    ];
+
+    return Scaffold(
       appBar: AppBar(
-        title: Text('Startup Name Generator'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.list),
-            onPressed: _pushSaved,
-          )
-        ],
+        title: Text('Flutter Sample Apps'),
       ),
-      body: _buildSuggestions(),
-    );
-  }
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: (context, i) {
-        if (i.isOdd) return Divider();
-
-        final index = i ~/ 2;
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10));
-        }
-        return _buildRow(_suggestions[index]);
-      },
-    );
-  }
-
-  Widget _buildRow(WordPair wordPair) {
-    final alreadySaved = _savedWordPair.contains(wordPair);
-    return ListTile(
-      title: Text(
-        wordPair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            _savedWordPair.remove(wordPair);
-          } else {
-            _savedWordPair.add(wordPair);
-          }
-        });
-      },
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final Iterable<ListTile> tiles = _savedWordPair.map(
-            (WordPair pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont
-                ),
-              );
-            }
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: (context, i) {
+          if(i.isOdd) return Divider();
+          final index = i ~/ 2;
+          return ListTile(
+            title: Text(pages[index].name),
+            onTap: () {
+              Navigator.pushNamed(context, '/getting-start');//pages[index].route);
+            },
           );
-
-          final List<Widget> divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          )
-          .toList();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
-        }
-      )
+        },
+        itemCount: pages.length * 2 - 1,
+      ),
     );
   }
+}
+
+class PageInfomation {
+  final String route;
+  final String name;
+
+  const PageInfomation(this.route, this.name);
 }
