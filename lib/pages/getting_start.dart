@@ -10,13 +10,6 @@ class SuggestWordListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   title: 'Getting Start(Startup Name Generator)',
-    //   theme: ThemeData(
-    //     primaryColor: Colors.orangeAccent
-    //   ),
-    //   home: RandomWords()
-    // );
     return RandomWords();
   }
 }
