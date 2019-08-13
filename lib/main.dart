@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
           return ListTile(
             title: Text(pages[index].name),
             onTap: () {
-              Navigator.pushNamed(context, '/getting-start');//pages[index].route);
+              Navigator.pushNamed(context, pages[index].route);
             },
           );
         },
