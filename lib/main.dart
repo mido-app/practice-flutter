@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/models/page_meta.dart';
 import './pages/01_getting_start.dart';
-import './pages/02_introduction_to_widgets.dart';
+import './pages/02_user_interface.dart';
 
 void main() {
   runApp(
@@ -9,7 +9,8 @@ void main() {
       initialRoute: HomePage.route,
       routes: {
         HomePage.route: (context) => HomePage(),
-        GettingStartPage.meta.route: (context) => GettingStartPage()
+        GettingStartPage.meta.route: (context) => GettingStartPage(),
+        UserInterfacePage.meta.route: (context) => UserInterfacePage(),
       }
     )
   );
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     const pages = <PageMeta>[
       GettingStartPage.meta,
-      IntroductionToWidgetsPage.meta
+      UserInterfacePage.meta
     ];
 
     return Scaffold(
