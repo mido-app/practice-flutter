@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import '../models/page_meta.dart';
 
 /*
  * This widget was created with reference to this page
  * https://flutter.dev/docs/get-started/codelab
  */
-class SuggestWordListPage extends StatelessWidget {
-  static const route = '/getting-start';
+class GettingStartPage extends StatelessWidget {
+  static const meta = PageMeta('01-getting-start', '01. Getting Start');
 
   @override
   Widget build(BuildContext context) {

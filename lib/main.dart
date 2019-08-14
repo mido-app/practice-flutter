@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import './pages/getting_start.dart';
+import 'package:hello_flutter/models/page_meta.dart';
+import './pages/01_getting_start.dart';
+import './pages/02_introduction_to_widgets.dart';
 
 void main() {
   runApp(
@@ -7,7 +9,7 @@ void main() {
       initialRoute: HomePage.route,
       routes: {
         HomePage.route: (context) => HomePage(),
-        SuggestWordListPage.route: (context) => SuggestWordListPage()
+        GettingStartPage.meta.route: (context) => GettingStartPage()
       }
     )
   );
@@ -18,8 +20,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const pages = <PageInfomation>[
-      PageInfomation(SuggestWordListPage.route, 'Getting Start')
+    const pages = <PageMeta>[
+      GettingStartPage.meta,
+      IntroductionToWidgetsPage.meta
     ];
 
     return Scaffold(
@@ -32,7 +35,7 @@ class HomePage extends StatelessWidget {
           if(i.isOdd) return Divider();
           final index = i ~/ 2;
           return ListTile(
-            title: Text(pages[index].name),
+            title: Text(pages[index].title),
             onTap: () {
               Navigator.pushNamed(context, pages[index].route);
             },
@@ -42,11 +45,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-class PageInfomation {
-  final String route;
-  final String name;
-
-  const PageInfomation(this.route, this.name);
 }
